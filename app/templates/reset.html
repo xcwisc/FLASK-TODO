@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  <div class="row">
+    <div class="col-md-8">
+      {% for category, message in messages %}
+      <div class="alert alert-{{ category }}">
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+  {% endwith %}
+  <br>
+  <div class="row">
+    <div class="col-md-8">
+      {% import 'bootstrap/wtf.html' as wtf %}
+      {{wtf.quick_form(resetForm)}}
+    </div>
+  </div>
+</div>
+{% endblock %}

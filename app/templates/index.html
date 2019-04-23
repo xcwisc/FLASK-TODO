@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  {% if current_user.username %}
+  <h1>Home for {{ current_user.username }}</h1>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  <div class="row">
+    <div class="col-md-8">
+      {% for category, message in messages %}
+      <div class="alert alert-{{ category }}">
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+  {% endwith %}
+  <br>
+  <div class="row">
+    <div class="col-md-8">
+      {% import 'bootstrap/wtf.html' as wtf %}
+      {{wtf.quick_form(postForm)}}
+    </div>
+  </div>
+  <hr>
+  {% for post in current_user.posts %}
+  <div class="media">
+    <div class="media-left">
+      <a class="close" aria-label="Close" href="/delete-post/{{ post.id }}">
+        <span aria-hidden="true">&times;</span>
+      </a>
+      <img src="{{ current_user.avatar }}" class="mr-3" alt="avatar" width="50px">
+    </div>
+    <div class="media-body">
+      <h5 class="mt-0">{{ post.author.username }}</h5>
+      <small class="text-muted">{{ post.timestamp }}</small>
+      <p>{{ post.body }}</p>
+    </div>
+  </div>
+  {% endfor %}
+  {% else %}
+  <h1>Please login</h1>
+  {% endif %}
+</div>
+{% endblock %}

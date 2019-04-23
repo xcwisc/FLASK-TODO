@@ -1,0 +1,6 @@
+.vscode/
+ENV/
+__pycache__/
+pylintrc
+app.db
+config.py
